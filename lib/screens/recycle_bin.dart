@@ -8,6 +8,9 @@ class RecycleBin extends StatelessWidget {
   const RecycleBin({Key? key}) : super(key: key);
   static const id = 'recycle_bin_screen';
 
+  void onTap(BuildContext context) =>
+      context.read<TasksBloc>().add(DeleteAllTasks());
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
@@ -15,7 +18,23 @@ class RecycleBin extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: appColor,
-            title: const Text('Recycle Bin', style: TextStyle(color: Colors.white),),
+            title: const Text(
+              'Recycle Bin',
+              style: TextStyle(color: Colors.white),
+            ),
+            actions: [
+              PopupMenuButton(
+                  itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: TextButton.icon(
+                            onPressed: () => onTap(context),
+                            icon: const Icon(Icons.delete_forever),
+                            label: const Text('Delete all Tasks'),
+                          ),
+                          onTap: () => onTap(context),
+                        )
+                      ]),
+            ],
           ),
           drawer: const MyDrawer(),
           body: Column(

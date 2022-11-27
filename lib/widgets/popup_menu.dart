@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:xtodo/models/task.dart';
 
@@ -6,10 +8,16 @@ class PopupMenu extends StatelessWidget {
   final VoidCallback cancelOrDeleteCallback;
   final VoidCallback likeOrDislike;
   final VoidCallback editTaskCallBack;
+  final VoidCallback restoreTaskCallBack;
   const PopupMenu(
-      {Key? key, required this.cancelOrDeleteCallback, required this.task, required this.likeOrDislike, required this.editTaskCallBack})
+      {Key? key,
+      required this.cancelOrDeleteCallback,
+      required this.task,
+      required this.likeOrDislike,
+      required this.editTaskCallBack,
+      required this.restoreTaskCallBack
+      })
       : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +26,27 @@ class PopupMenu extends StatelessWidget {
             ? (context) => [
                   PopupMenuItem(
                     child: TextButton.icon(
-                      onPressed: null,
+                      onPressed: () => editTaskCallBack(),
                       icon: const Icon(Icons.edit),
                       label: const Text('Edit'),
                     ),
-                    onTap: editTaskCallBack,
+                    onTap: () => editTaskCallBack(),
                   ),
                   PopupMenuItem(
                     child: TextButton.icon(
                       onPressed: null,
-                      icon: task.isFavorite! ? const Icon(Icons.bookmark_remove) : const Icon(Icons.bookmark_add_outlined),
-                      label: task.isFavorite! ? const Text('Remove from Bookmarks') : const Text('Add to Bookmarks'),
+                      icon: task.isFavorite!
+                          ? const Icon(Icons.bookmark_remove)
+                          : const Icon(Icons.bookmark_add_outlined),
+                      label: task.isFavorite!
+                          ? const Text('Remove from \nBookmarks')
+                          : const Text('Add to \nBookmarks'),
                     ),
                     onTap: likeOrDislike,
                   ),
                   PopupMenuItem(
                     child: TextButton.icon(
-                      onPressed: null,
+                      onPressed: cancelOrDeleteCallback,
                       icon: const Icon(Icons.delete),
                       label: const Text('Delete'),
                     ),
@@ -44,11 +56,11 @@ class PopupMenu extends StatelessWidget {
             : (context) => [
                   PopupMenuItem(
                     child: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: restoreTaskCallBack,
                       icon: const Icon(Icons.restore_from_trash),
                       label: const Text('Restore'),
                     ),
-                    onTap: () {},
+                    onTap: restoreTaskCallBack,
                   ),
                   PopupMenuItem(
                     child: TextButton.icon(

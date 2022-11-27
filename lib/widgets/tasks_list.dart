@@ -24,11 +24,17 @@ class TasksList extends StatelessWidget {
                   body: ListTile(
                     title: SelectableText.rich(
                       TextSpan(children: [
-                        const TextSpan(text: 'Text: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const TextSpan(
+                            text: 'Title: ',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(text: task.title),
-                       const  TextSpan(text: '\n\nDescription: ', style: TextStyle(fontWeight: FontWeight.bold)),
-                       TextSpan(text: task.taskDescription + '\n'),
-                       TextSpan(text: '' + TimeElapsed.fromDateStr(task.date))
+                        const TextSpan(
+                            text: '\n\nDescription: ',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(text: task.taskDescription + '\n'),
+                        TextSpan(
+                            text: '\nTask Added: ' +
+                                TimeElapsed.fromDateStr(task.date) + ' ago')
                       ]),
                     ),
                   ),

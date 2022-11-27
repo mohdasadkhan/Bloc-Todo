@@ -16,6 +16,7 @@ class TaskTile extends StatelessWidget {
   final Task task;
 
   void _editTask(BuildContext context) {
+    Navigator.pop(context);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -25,6 +26,7 @@ class TaskTile extends StatelessWidget {
         ),
       ),
     );
+    // Navigator.pop(context);
   }
 
   void _removeOrDeleteTask(BuildContext ctx, Task task) {
@@ -84,9 +86,8 @@ class TaskTile extends StatelessWidget {
               likeOrDislike: () => context
                   .read<TasksBloc>()
                   .add(MarkFavoriteOrUnFavorite(task: task)),
-              editTaskCallBack: () {
-                _editTask(context);
-              },
+              editTaskCallBack: () => _editTask(context),
+              restoreTaskCallBack: () => context.read<TasksBloc>().add(RestoreTask(task: task)),
             )
           ],
         ),
